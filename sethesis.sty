@@ -1,0 +1,61 @@
+\ProvidesPackage{sethesis}
+\RequirePackage{graphicx} % Grafik-Paket laden
+%\RequirePackage[standard-baselineskips]{cmbright}
+%\RequirePackage{palatino}
+
+%\def\usedfonts{CM-Bright}
+
+\newcommand{\unilogo}[1]{\def\@unilogo{#1}}
+\newcommand{\studiengang}[1]{\def\@studiengang{#1}}
+\newcommand{\ort}[1]{\def\@ort{#1}}
+\newcommand{\datum}[1]{\def\@datum{#1}}
+\newcommand{\myauthor}[1]{\def\@myauthor{#1}}
+\newcommand{\version}[1]{\def\@version{#1}}
+
+
+\renewcommand{\maketitle}{
+	\begin{titlepage}
+		%
+		\begin{center}
+			\@unilogo
+		\end{center}
+
+		\vfill
+
+		\begin{center}
+			\huge { \textbf{\expandafter{\@title}} }
+		\end{center}
+		%
+		\vspace*{0.25cm}
+		%
+		\begin{center}
+			\Large im Studiengang \expandafter{\@studiengang}
+		\end{center}
+		%
+		\begin{center}
+			\vspace*{1em}
+			\Large von
+			\vspace*{1em}
+		\end{center}
+		%
+		\begin{center}
+			\Large \textbf{\expandafter{\@myauthor}}
+		\end{center}
+		%
+		\vspace*{0.05\textheight}
+		%
+		\vspace*{0.75em}
+		%
+		\begin{center}
+			\Large \textbf{\expandafter{\@ort}, \expandafter{\@datum}}
+		\end{center}
+		%
+		\vspace*{0.75em}
+		%
+		\begin{center}
+			\Large \textbf{\expandafter{\@version}}
+		\end{center}
+		%
+	\end{titlepage}%
+}
+
