@@ -1,0 +1,134 @@
+{
+    "latex-workshop.formatting.latex": "latexindent",
+    "latex-workshop.latex.outDir": "./out/",
+    "latex-workshop.latex.tools": [
+        {
+            "name": "latexmk",
+            "command": "latexmk",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "-pdf",
+                "-outdir=out",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "xelatex",
+            "command": "xelatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "pdflatex",
+            "command": "pdflatex",
+            "args": [
+                "-synctex=1",
+                "-interaction=nonstopmode",
+                "-file-line-error",
+                "--output-directory=out",
+                "%DOC%"
+            ],
+            "env": {}
+        },
+        {
+            "name": "bibtex",
+            "command": "bibtex",
+            "args": [
+                "%DOCFILE%"
+            ],
+            "env": {}
+        }
+    ],
+    "latex-workshop.latex.recipes": [
+        {
+            "name": "pdfLaTeX",
+            "tools": [
+                "pdflatex"
+            ]
+        },
+        {
+            "name": "latexmk 🔃",
+            "tools": [
+                "latexmk"
+            ]
+        },
+        {
+            "name": "xelatex",
+            "tools": [
+                "xelatex"
+            ]
+        },
+        {
+            "name": "pdflatex ➞ bibtex ➞ pdflatexx2",
+            "tools": [
+                "pdflatex",
+                "bibtex",
+                "pdflatex",
+                "pdflatex"
+            ]
+        },
+        {
+            "name": "xelatex ➞ bibtex ➞ xelatexx2",
+            "tools": [
+                "xelatex",
+                "bibtex",
+                "xelatex",
+                "xelatex"
+            ]
+        }
+    ],
+    "cSpell.words": [
+        "Arbitrierungs",
+        "Ausgabeflags",
+        "Bitstelle",
+        "Bitstellen",
+        "Borger",
+        "Busysignal",
+        "Carrybit",
+        "Carrysignal",
+        "Checkbits",
+        "Cout",
+        "Eingabeflags",
+        "Equalsblock",
+        "Equalsgatter",
+        "Equalsgatters",
+        "Flagausgänge",
+        "Flageingängen",
+        "flankengesteuert",
+        "Gatterreduzierung",
+        "Gattersparung",
+        "Hexdateien",
+        "insb",
+        "JADR",
+        "JAMC",
+        "JAMO",
+        "JAMZ",
+        "JMPC",
+        "JMPO",
+        "JMPZ",
+        "Kompl",
+        "leistungssensitive",
+        "mögl",
+        "Multiplizierer",
+        "Multiplizierers",
+        "NAND",
+        "promgen",
+        "reihenfolgenabhängig",
+        "resettet",
+        "Schaltungsaufwand",
+        "Schaltungsfläche",
+        "Subtraktionsergebnis",
+        "Subtraktionsoperation",
+        "verodert",
+        "verundet",
+        "vorderflankengesteuert"
+    ]
+}
