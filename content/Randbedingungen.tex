@@ -1,2 +1,40 @@
 \chapter{Randbedingungen}
 \label{chap:randbedingungen}
+
+\section{Zustandscodierung}
+\label{sec:Zustandscodierung}
+
+\begin{table} [H]
+    \centering
+    \begin{tabular}{|l|c|c|c|c|}
+        \hline
+        \multirow{2}{*}{\textbf{Zustand}} & \multicolumn{4}{c}{\textbf{Codierung}}                \\
+
+                                          & Q3                                     & Q2 & Q1 & Q0 \\
+        \hline
+        \textbf{Fetch}                    & 0                                      & 0  & 0  & 0  \\
+        \hline
+        \textbf{SET\_PC}                  & 0                                      & 0  & 1  & 0  \\
+        \hline
+        \textbf{ALU1}                     & 0                                      & 1  & 0  & 0  \\
+        \hline
+        \textbf{ALU2}                     & 0                                      & 1  & 0  & 1  \\
+        \hline
+        \textbf{JMXA1}                    & 1                                      & 0  & 0  & 0  \\
+        \hline
+        \textbf{JMXA2}                    & 1                                      & 0  & 0  & 1  \\
+        \hline
+        \textbf{LDA}                      & 1                                      & 1  & 0  & 0  \\
+        \hline
+        \textbf{SVA}                      & 1                                      & 1  & 0  & 1  \\
+        \hline
+        \textbf{SWR}                      & 1                                      & 1  & 1  & 0  \\
+        \hline
+        \textbf{END}                      & 1                                      & 1  & 1  & 1  \\
+        \hline
+        \textbf{Don´t Care}               & -                                      & -  & -  & -  \\
+        \hline
+    \end{tabular}
+    \caption{Zustandscodierung des Steuerwerks}
+    \label{tab:Zustandscodierung}
+\end{table}

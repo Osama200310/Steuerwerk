@@ -3,8 +3,6 @@
 
 Das Steuerwerk soll folgende Funktionen ausführen können:
 
-\subsection{Eingänge}
-\label{sec:eingänge}
 
 \begin{table}[ht]
     \centering
@@ -12,6 +10,22 @@ Das Steuerwerk soll folgende Funktionen ausführen können:
         \hline
         \cellcolor[gray]{0.8} \textbf{Berechnungsart} & \cellcolor[gray]{0.8} \textbf{So} & \cellcolor[gray]{0.8} \textbf{S1} &
         \cellcolor[gray]{0.8} \textbf{S2}             & \cellcolor[gray]{0.8} \textbf{S3}                                             \\
+        \hline
+        And                                           & 0                                 & 0                                 & 0 & 0 \\
+        \hline
+        Or                                            & 0                                 & 0                                 & 0 & 1 \\
+        \hline
+        Not                                           & 0                                 & 0                                 & 1 & 0 \\
+        \hline
+        Add                                           & 0                                 & 0                                 & 1 & 1 \\
+        \hline
+        Sub                                           & 0                                 & 1                                 & 0 & 0 \\
+        \hline
+        Mul                                           & 0                                 & 1                                 & 0 & 1 \\
+        \hline
+        Reserved1                                     & 0                                 & 1                                 & 1 & 0 \\
+        \hline
+        Reserved2                                     & 0                                 & 1                                 & 1 & 1 \\
         \hline
         JMP                                           & 1                                 & 0                                 & 0 & 0 \\
         \hline
@@ -44,7 +58,3 @@ Das Steuerwerk soll folgende Funktionen ausführen können:
     \item Switch Register (SWR): Inhalte von Register A und B tauschen
     \item End (END): Rechnenoperation wird beendet
 \end{itemize}
-
-
-\subsection{Ausgänge}
-\label{sec:ausgänge}
