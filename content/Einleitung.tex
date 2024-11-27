@@ -1,5 +1,35 @@
-\chapter{Einleitung}
-\label{chap:einleitung}
+\chapter{Überblick der CPU}
+\label{chap:Überblick der CPU}
 
-Das Steuerwerk nimmt Befehle aus dem Hautspeicher entgegen, decodiert diese und erzeugt daraus eine geeignete zeitliche Sequenz von
-Steuersignalen für das Rechenwerk. Neben der ALU ist dies ein Hauptbestandteil eines Prozessors.
+Die Central Processing Unit (CPU) ist die zentrale Komponente eines Computers, die alle Rechenoperationen ausführt und die
+Verarbeitung der Signale steuert. Sie lädt Befehle aus dem Arbeitsspeicher (RAM), führt Berechnungen oder logische Operationen
+aus und schreibt das Ergebnis zurück in den Speicher. Dadurch fungiert sie als das „Gehirn“ des Computersystems.
+\\\\
+Die CPU setzt sich aus mehreren wichtigen Komponenten zusammen. Zu den Hauptbestandteilen gehören das \textbf{Steuerwerk}
+(Control Unit), das den Datenfluss innerhalb der CPU koordiniert, sowie die \textbf{arithmetisch-logische Einheit} (ALU),
+die für mathematische und logische Operationen verantwortlich ist.
+\\\\
+Weitere essenzielle Komponenten der CPU sind die \textbf{Register}, die temporäre Speicherplätze für Daten,
+Operanden und Adressen bereitstellen. \\ Die CPU verwendet fünf solcher Register, die in verschiedenen Modulen integriert sind.
+Das \texttt{OpReg} enthält ein Register für die aktuelle Operation (\autoref{TODO}), während sich jeweils zwei Register in den
+Modulen \texttt{SWR} (\autoref{TODO}) und \texttt{RegADR} (\autoref{TODO}) befinden.
+\\\\
+Diese Register haben folgende Aufgaben:
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|p{8cm}|}
+        \hline
+        \textbf{Register} & \textbf{Komponente} & \textbf{Beschreibung}                                             \\ \hline
+        \texttt{Op}       & \texttt{OpReg}      & Enthält die aktuelle 4-Bit-Operation, die ausgeführt werden soll. \\ \hline
+        \texttt{A}        & \texttt{SWR}        & Speichert den ersten 4-Bit-Operanden für die ALU.                 \\ \hline
+        \texttt{B}        & \texttt{SWR}        & Speichert den zweiten 4-Bit-Operanden für die ALU.                \\ \hline
+        \texttt{ADR1}     & \texttt{RegADR}     & Enthält die 4 MSB (Most Significant Bits) der RAM-Adresse.        \\ \hline
+        \texttt{ADR2}     & \texttt{RegADR}     & Enthält die 4 LSB (Least Significant Bits) der RAM-Adresse.       \\ \hline
+    \end{tabular}
+    \caption{Übersicht der Register und ihrer Komponenten}
+    \label{tab:register}
+\end{table}
+
+\noindent Das Verständnis der Registerstruktur ist essenziell für das Verständnis der Funktionsweise der CPU, da die Register
+den Ablauf der Befehlsverarbeitung und die Speicheradressierung maßgeblich beeinflussen.
