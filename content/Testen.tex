@@ -1,2 +1,126 @@
-\chapter{Testen}
+\chapter{Teststrategie für das Steuerwerk und die ALU}
 \label{chap:Testen}
+
+
+\section{Vorgehen zum Testen}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{content/figures/Testautomat.png}
+    \caption{Testautomat zur Verifikation von Steuerwerk und RAM}
+    \label{fig:Testautomat}
+\end{figure}
+
+Die folgende Schaltung wurde entwickelt, um das Steuerwerk und den RAM innerhalb der CPU zu validieren. Die Hauptkomponenten und ihr Zusammenspiel zur Testdurchführung können wie folgt beschrieben werden:
+
+\begin{enumerate}
+    \item \textbf{Loader:} Der Loader lädt Daten oder Programme in den Speicher (RAM). Über die Signale \texttt{Load} und \texttt{Clock} wird der Ladevorgang gesteuert. Der Reset-Eingang (\texttt{ResetLoader}) ermöglicht das Zurücksetzen des Loaders.
+    \item \textbf{TestPROM:} Das Test-ROM speichert vordefinierte Testdaten oder Programme, die für die Verifizierung des Systems verwendet werden. Die Daten werden über Multiplexer an die restlichen Komponenten weitergeleitet.
+    \item \textbf{Multiplexer (MUX und MUXIE):}
+          \begin{itemize}
+              \item Der \textbf{MUX} entscheidet, ob Adress- und Datensignale vom Loader oder der CPU stammen.
+              \item Der \textbf{MUXIE} leitet Daten korrekt zwischen CPU, RAM und anderen Komponenten weiter.
+          \end{itemize}
+    \item \textbf{RAM:} Der Speicher (RAM 804) dient als Hauptspeicher für die Datenverarbeitung und speichert sowohl Programm- als auch Datensignale.
+    \item \textbf{CPU:} Die CPU führt die Testprogramme aus und greift auf den Speicher zu. Über den Reset-Eingang (\texttt{ResetCPU}) kann die CPU zurückgesetzt werden.
+\end{enumerate}
+
+\section{Ziel der Tests}
+Die Teststrategie zielt darauf ab, die korrekte Funktionalität des Steuerwerks und der ALU zu validieren. Folgende Bereiche stehen im Fokus:
+\begin{itemize}
+    \item Funktionalität des RAMs
+    \item Ausführung von Steuerwerk-Befehlen
+    \item Korrektheit logischer und arithmetischer ALU-Operationen
+    \item Verarbeitung von mehrstufigen und iterativen Berechnungen
+\end{itemize}
+
+\section{Testkategorien und Testfälle}
+
+\subsection{1. Variablen-Tests}
+\noindent\textbf{Ziel:} Überprüfung der Funktionalität des RAMs durch Lesen und Schreiben von Werten. \\
+\textbf{Programmzeilen:}
+\begin{verbatim}
+00 END
+\end{verbatim}
+\textbf{Erwartetes Ergebnis:} Adressen: 1--31; Werte: 0xF (für alle Adressen).
+
+\begin{table}[H]
+    \centering
+    \rotatebox{90}{
+        \begin{tabular}{|p{3cm}|p{6cm}|p{3cm}|p{3cm}|}
+            \hline
+            \textbf{Ziel}                                                                & \textbf{Eingaben und Programm}               & \textbf{Erwartetes Ergebnis} & \textbf{Status} \\ \hline
+            Überprüfung der Funktionalität des RAMs durch Lesen und Schreiben von Werten & Adressen: 1--31; Werte: 0xF; \texttt{00 END} & Adressen: 1--31; Werte: 0xF  & succeeded       \\ \hline
+        \end{tabular}
+    }
+    \caption{Testfall für Variablen-Tests}
+\end{table}
+
+\clearpage
+\subsection{2. Steuerwerk-Befehle}
+\noindent\textbf{Ziel:} Validierung von Steuerwerk-Befehlen wie Laden, Speichern und Springen. \\
+
+\begin{table}[H]
+    \centering
+    \rotatebox{90}{
+        \begin{tabular}{|p{2.5cm}|p{6.5cm}|p{3cm}|p{3cm}|}
+            \hline
+            \textbf{Befehl} & \textbf{Eingaben und Programm}                                                                                                                                 & \textbf{Erwartetes Ergebnis}                & \textbf{Status} \\ \hline
+            LDA und SVA     & Adressen: 20--22; Werte: 0xA, 0xB, 0xC; \texttt{00 LDA 20, 03 SVA 23, 06 LDA 21, 09 SVA 24, 0B LDA 22, 0F SVA 25, 12 END}                                      & Adressen: 23--25; Werte: 0xA, 0xB, 0xC      & succeeded       \\ \hline
+            SWR             & Adressen: 20--23; Werte: 0xA, 0xB, 0xC, 0xD; \texttt{00 LDA 20, 03 SWR, 04 LDA 21, 07 SWR, 08 SVA 24, 0B LDA 22, 0E SWR, 12 LDA 23, 15 SWR, 16 SVA 26, 25 END} & Adressen: 24--27; Werte: 0xA, 0xB, 0xC, 0xD & succeeded       \\ \hline
+            JMP             & Adressen: 20--21; Werte: 0xA, 0xB; \texttt{00 LDA 20, 03 SVA 22, 06 SVA 23, 09 SVA 24, 12 JMP 27, 15 LDA 21, 18 SVA 22, 21 SVA 23, 24 SVA 24, 27 END}          & Adressen: 22--24; Werte: 0xA, 0xA, 0xA      & succeeded       \\ \hline
+        \end{tabular}
+    }
+    \caption{Testfälle für Steuerwerk-Befehle}
+\end{table}
+
+\subsection{3. ALU-Befehle}
+\noindent\textbf{Ziel:} Validierung der ALU-Operationen wie Addition, Subtraktion, AND, OR. \\
+
+\begin{table}[H]
+    \centering
+    \rotatebox{90}{
+        \begin{tabular}{|p{2.5cm}|p{6.5cm}|p{3cm}|p{3cm}|}
+            \hline
+            \textbf{Befehl} & \textbf{Eingaben und Programm}                                                                                         & \textbf{Erwartetes Ergebnis}      & \textbf{Status} \\ \hline
+            AND             & Adressen: 20--21; Werte: 0xA, 0xF; \texttt{00 LDA 20, 03 SWR, 04 LDA 21, 07 AND, 08 SVA 22, 11 END}                    & Adresse 22: 0xA                   & succeeded       \\ \hline
+            OR              & Adressen: 20--21; Werte: 0xA, 0x5; \texttt{00 LDA 20, 03 SWR, 04 LDA 21, 07 OR, 08 SVA 22, 11 END}                     & Adresse 22: 0xF                   & succeeded       \\ \hline
+            ADD             & Adressen: 20--21; Werte: 0x2, 0x3; \texttt{00 LDA 20, 03 SWR, 04 LDA 21, 07 ADD, 08 SVA 22, 11 END}                    & Adresse 22: 0x5                   & succeeded       \\ \hline
+            MUL             & Adressen: 20--21; Werte: 0x5, 0x5; \texttt{00 LDA 20, 03 SWR, 04 LDA 21, 07 MUL, 08 SVA 22, 11 SWR, 12 SVA 23, 15 END} & Adressen: 22--23; Werte: 0x1, 0x9 & succeeded       \\ \hline
+        \end{tabular}
+    }
+    \caption{Testfälle für ALU-Befehle}
+\end{table}
+
+\subsection{4. Konditionelle Sprungbefehle}
+\noindent\textbf{Ziel:} Validierung der konditionellen Sprungbefehle wie Jump-Zero, Jump-Overflow und Jump-Carry. \\
+
+\begin{table}[H]
+    \centering
+    \rotatebox{90}{
+        \begin{tabular}{|p{2.5cm}|p{6.5cm}|p{3cm}|p{3cm}|}
+            \hline
+            \textbf{Befehl} & \textbf{Eingaben und Programm}                                                                                                       & \textbf{Erwartetes Ergebnis} & \textbf{Status}                         \\ \hline
+            Jump-Zero       & Adressen: 20--21; Werte: 0x5, 0x5; \texttt{00 LDA 20, 03 SWR, 04 LDA 21, 07 SUB, 08 SVA 22, 0B JMZ 14, 0E LDA 20, 11 SVA 22, 14 END} & Adresse 22: 0x5              & succeeded                               \\ \hline
+            Jump-Overflow   & Adressen: 20--21; Werte: 0xF, 0xD; \texttt{00 LDA 20, 03 SWR, 04 LDA 21, 07 ADD, 08 SVA 22, 0B JMO 14, 0E LDA 21, 11 SVA 22, 14 END} & Adresse 22: 0x4              & failed : test-case might include errors \\ \hline
+            Jump-Carry      & Adressen: 20--21; Werte: 0xF, 0x1; \texttt{00 LDA 20, 03 SWR, 04 LDA 21, 07 ADD, 08 SVA 22, 0B JMC 14, 0E LDA 21, 11 SVA 22, 14 END} & Adresse 22: 0x0              & succeeded                               \\ \hline
+        \end{tabular}
+    }
+    \caption{Testfälle für konditionelle Sprungbefehle}
+\end{table}
+
+\subsection{5. Kombinatorische Tests}
+\noindent\textbf{Ziel:} Sicherstellung der korrekten Verarbeitung komplexer Operationen. \\
+
+\begin{table}[H]
+    \centering
+    \rotatebox{90}{
+        \begin{tabular}{|p{2.5cm}|p{6.5cm}|p{3cm}|p{3cm}|}
+            \hline
+            \textbf{Testfall}    & \textbf{Eingaben und Programm}                                                                                                                                                             & \textbf{Erwartetes Ergebnis}      & \textbf{Status} \\ \hline
+            Mehrstufige Addition & Adressen: 20--23; Werte: 0x1, 0x2, 0x3, 0x4; \texttt{00 LDA 20, 03 SWR, 04 LDA 21, 07 ADD, 08 SVA 24, 11 SWR, 12 LDA 22, 15 ADD, 16 SVA 25, 19 SWR, 20 LDA 23, 23 ADD, 24 SVA 26, 27 END}  & Adressen: 24--26; Werte: 3, 6, 10 & succeeded       \\ \hline
+            Iterative Berechnung & Adressen: 20--22; Werte: 0x2, 0x5, 0x1; \texttt{00 LDA 20, 03 SVA 23, 06 LDA 22, 09 SWR, 0A LDA 21, 0D SUB, 0E SVA 21, 11 JMZ 1E, 14 LDA 20, 17 SWR, 18 LDA 23, 1B ADD, 1C JMP 06, 1F END} & Adresse 23: 0xA                   & succeeded       \\ \hline
+        \end{tabular}
+    }
+    \caption{Testfälle für kombinatorische Tests}
+\end{table}

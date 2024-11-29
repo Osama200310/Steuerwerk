@@ -182,6 +182,66 @@ Das Steuerwerk kann Mithilfe der ALU folgende Funktionen ausführen:
     \label{fig:Unterstützte Operationen}
 \end{table}
 
+\section{Gleichungen der Transitionen}
+\texttt{D3..0} stellen Ausgänge der Transitionsfunktion dar und definieren die Bedingungen, unter denen
+die Eingänge der Flip-Flops gesetzt werden, um den nächsten Zustand im Steuerwerk zu erreichen.
+\begin{itemize}
+    \item \textbf{D3} = $(\overline{R} \land \overline{Q2} \land \overline{Q1} \land \overline{Q0} \land C3) \lor (\overline{R} \land Q3 \land \overline{Q2} \land \overline{Q0}) \lor (\overline{R} \land Q3 \land \overline{Q2} \land C2).$
+
+    \item \textbf{D2} = $(\overline{R} \land \overline{Q3} \land \overline{Q2} \land \overline{Q1} \land \overline{C3}) \lor (\overline{R} \land \overline{Q3} \land \overline{Q2} \land \overline{Q1} \land C2 \land C1) \lor \\
+              (\overline{R} \land \overline{Q3} \land Q2 \land \overline{Q0} \land BLA) \lor (\overline{R} \land \overline{Q2} \land Q0 \land C2) \lor \\
+              (\overline{R} \land \overline{Q3} \land Q2 \land BLA \land Busy). $
+
+    \item \textbf{D1} = $(\overline{R} \land \overline{Q3} \land \overline{Q2} \land \overline{Q1} \land C3 \land C2 \land C1) \lor (\overline{R} \land \overline{Q2} \land Q0 \land \overline{C2} \land \overline{C1} \land \overline{C0}) \lor \\
+              (\overline{R} \land \overline{Q2} \land Q0 \land \overline{C2} \land \overline{C1} \land Carry) \lor (\overline{R} \land \overline{Q2} \land Q0 \land C1 \land C0 \land Zero) \lor \\
+              (\overline{R} \land \overline{Q2} \land Q0 \land \overline{C2} \land \overline{C0} \land Overflow). $
+
+    \item \textbf{D0} = $(\overline{R} \land \overline{Q2} \land \overline{Q1} \land C3 \land C2 \land C1 \land C0) \lor (\overline{R} \land Q3 \land \overline{Q2} \land \overline{Q0} \land BLA) \lor \\
+              (\overline{R} \land Q3 \land \overline{Q2} \land \overline{Q0}) \lor (\overline{R} \land \overline{Q3} \land Q2 \land BLA \land Busy) \lor \\
+              (\overline{R} \land Q3 \land \overline{Q2} \land C2 \land C0)$.
+\end{itemize}
+
+
+
+\section{Gleichungen der Outputs}
+Die Gleichungen für die Outputs des Steuerwerks legen fest, welche Signale aktiviert werden,
+abhängig von den aktuellen Zuständen der Steuerbits \texttt{Q3..0}.
+\begin{itemize}
+    \item \textbf{WriteA}
+          ($Q3 \land Q2 \land \overline Q1 \land \overline Q0$)
+
+    \item \textbf{WriteRAM}
+          ($Q3 \land Q2 \land \overline Q1 \land Q0$)
+
+    \item \textbf{WriteADR1}
+          ($Q3 \land \overline Q2 \land \overline Q0$)
+
+    \item \textbf{WriteADR2}
+          ($\overline Q2 \land Q0$)
+
+    \item \textbf{WriteOP}
+          $\overline Q3$
+
+    \item \textbf{!PC-LD}
+          $\overline Q1 \lor Q2$
+
+    \item \textbf{!PC-EN}
+          $(Q2 \land \overline Q1) \lor
+              (Q1 \land \overline Q0)$
+
+    \item \textbf{PC-UP}
+          $!Q1$
+
+    \item \textbf{RegADRtoRAM}
+          ($Q3 \land Q2 \land \overline Q1$)
+
+    \item \textbf{AluStart}
+          ($\overline Q3 \land Q2 \land \overline Q0$)
+
+    \item \textbf{SWR}
+          ($Q2 \land Q1 \land \overline Q0$)
+\end{itemize}
+
 
 
 
